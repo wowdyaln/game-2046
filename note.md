@@ -37,22 +37,25 @@
 }
 
 
-```css
+- tile 動畫
+```css 
+.tile {
+  animation: show 200ms ease-in-out;
+  transition: 100ms ease-in-out;
+}
 
-
-
-```
-
-
-```css
-
-
-
-```
-
-
-```css
-
-
+@keyframes show {
+  0% {
+    opacity: .5;
+    transform: scale(0);
+  }
+}
 
 ```
+
+## Grid
+- 創建 4by4 grid
+
+
+
+## script
