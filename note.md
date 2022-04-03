@@ -56,6 +56,8 @@
 ## Grid
 - 創建 4by4 grid
 
+- createCellElements，建立 4*4 DOM elements
+
 
 
 ## script
