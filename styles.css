@@ -37,15 +37,19 @@ body {
 .tile {
   --x: 3;
   --y: 2;
+  --background-lightness: 80%;
+  --text-lightness: 20%;
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   height: var(--cell-size);
   width: var(--cell-size);
-  background-color: aquamarine;
   border-radius: 1vmin;
 
   top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
   left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+
+  background-color: hsl(200, 50%, var(--background-lightness));
+  color: hsl(100, 15%, var(--text-lightness));
 }
