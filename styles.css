@@ -35,6 +35,8 @@ body {
 }
 
 .tile {
+  --x: 3;
+  --y: 2;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -43,4 +45,7 @@ body {
   width: var(--cell-size);
   background-color: aquamarine;
   border-radius: 1vmin;
+
+  top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+  left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
 }
