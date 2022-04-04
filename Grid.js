@@ -16,7 +16,7 @@ export default class Grid {
     gridElement.style.setProperty("--cell-size", `${CELL_SIZE}vmin`)
     gridElement.style.setProperty("--cell-gap", `${CELL_GAP}vmin`)
 
-    // create 12 cell elements
+    // create 12 empty cells (without tiles)
     this.#cells = createCellElements(gridElement).map(
       (cellEle, index) => {
         return new Cell(
@@ -27,6 +27,19 @@ export default class Grid {
       }
     )
   }
+
+  // 取得所有空的 cells （沒有 tile 在上方）
+  get #emptyCells() {
+    return this.#cells.filter((cell) => cell.tile == null)
+  }
+
+  // 從目前所有空的 cells, 隨機取一個 cell 出來
+  randomEmptyCell() {
+    const randomIndex = Math.floor(
+      Math.random() * this.#emptyCells.length
+    )
+    return this.#emptyCells[randomIndex]
+  }
 }
 
 //* 每個 cell 有自己的資料
@@ -34,11 +47,16 @@ class Cell {
   #cellEle
   #x
   #y
+  #tile
 
   constructor(cellEle, x, y) {
     this.#cellEle = cellEle
     this.#x = x
     this.#y = y
+  }
+
+  get tile() {
+    return this.#tile
   }
 }
 
