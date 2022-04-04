@@ -13,20 +13,20 @@ const setupInput = () => {
   window.addEventListener("keydown", handleInput, { once: true })
 }
 
-const handleInput = (e) => {
+const handleInput = async (e) => {
   //? console.log(e.key)
   switch (e.key) {
     case "ArrowUp":
-      moveUp()
+      await moveUp()
       break
     case "ArrowDown":
-      moveDown()
+      await moveDown()
       break
     case "ArrowLeft":
-      moveLeft()
+      await moveLeft()
       break
     case "ArrowRight":
-      moveRight()
+      await moveRight()
       break
     default: //* 如果不是方向鍵，再 call setupInput.
       setupInput()
@@ -60,28 +60,34 @@ const moveRight = () => {
 }
 
 const slideTiles = (cells) => {
-  cells.forEach((group) => {
-    for (let i = 1; i < group.length; i++) {
-      const cell = group[i]
-      if (cell.tile == null) continue
-      let lastValidCell
+  return Promise.all(
+    // http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
+    cells.flatMap((group) => {
+      const promises = []
+      for (let i = 1; i < group.length; i++) {
+        const cell = group[i]
+        if (cell.tile == null) continue
+        let lastValidCell
 
-      //give us the cell directly above that one.
-      for (let j = i - 1; j >= 0; j--) {
-        const moveToCell = group[j]
-        if (!moveToCell.canAccept(cell.tile)) break
-        lastValidCell = moveToCell
-      }
-      if (lastValidCell != null) {
-        if (lastValidCell.tile != null) {
-          lastValidCell.mergeTile = cell.tile
-        } else {
-          lastValidCell.tile = cell.tile
+        //give us the cell directly above that one.
+        for (let j = i - 1; j >= 0; j--) {
+          const moveToCell = group[j]
+          if (!moveToCell.canAccept(cell.tile)) break
+          lastValidCell = moveToCell
         }
-        cell.tile = null
+        if (lastValidCell != null) {
+          promises.push(cell.tile.waitForTransition())
+          if (lastValidCell.tile != null) {
+            lastValidCell.mergeTile = cell.tile
+          } else {
+            lastValidCell.tile = cell.tile
+          }
+          cell.tile = null
+        }
       }
-    }
-  })
+      return promises
+    })
+  )
 }
 
 //* logic
