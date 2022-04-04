@@ -2,13 +2,19 @@ export default class Tile {
   #tileElement
   #x
   #y
+  #value
 
   // tileContainer, 就是 gameBoard
-  constructor(tileContainer, value = Math.random() > 0.5 ? 2 : 4) {
+  constructor(tileContainer) {
     this.#tileElement = document.createElement("div")
     this.#tileElement.classList.add("tile")
     tileContainer.append(this.#tileElement)
-    this.value = value
+    this.value = Math.random() > 0.5 ? 2 : 4
+  }
+
+  set value(v) {
+    this.#value = v
+    this.#tileElement.textContent = v
   }
 
   set x(value) {
