@@ -42,6 +42,7 @@ const slideTiles = (cells) => {
   cells.forEach((group) => {
     for (let i = 1; i < group.length; i++) {
       const cell = group[i]
+      if (cell.tile == null) continue
       let lastValidCell
 
       //give us the cell directly above that one.
