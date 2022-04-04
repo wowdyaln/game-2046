@@ -42,3 +42,5 @@ const moveUp = () => {
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 setupInput()
+
+console.log(grid.cellsByColumn)

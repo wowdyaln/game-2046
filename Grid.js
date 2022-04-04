@@ -40,6 +40,26 @@ export default class Grid {
     )
     return this.#emptyCells[randomIndex]
   }
+
+  //* 使用2階 Array呈現目前每個 cell 的狀態
+  get cellsByColumn() {
+    return this.#cells.reduce((cellGrid, cell) => {
+      // debugger //* 使用 debugger 一步步去思考
+
+      cellGrid[cell.x] = cellGrid[cell.x] || []
+      cellGrid[cell.x][cell.y] = cell
+      return cellGrid
+    }, [])
+
+    /* 也可以改寫如下
+    const cellGrid = []
+    this.#cells.forEach((cell) => {
+      cellGrid[cell.x] = cellGrid[cell.x] || []
+      cellGrid[cell.x][cell.y] = cell
+    })
+    return cellGrid
+    */
+  }
 }
 
 //* 每個 cell 有自己的資料
@@ -64,6 +84,12 @@ class Cell {
     if (value == null) return
     this.#tile.x = this.#x
     this.#tile.y = this.#y
+  }
+  get x() {
+    return this.#x
+  }
+  get y() {
+    return this.#y
   }
 }
 
