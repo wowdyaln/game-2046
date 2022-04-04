@@ -35,27 +35,30 @@ const handleInput = async (e) => {
 
   grid.cells.forEach((cell) => cell.mergeTiles())
 
+  const newTile = new Tile(gameBoard)
+  grid.randomEmptyCell().tile = newTile
+
   setupInput()
 }
 
 const moveUp = () => {
-  console.log("grid.cellsByColumn:", grid.cellsByColumn)
+  // console.log("grid.cellsByColumn:", grid.cellsByColumn)
 
   return slideTiles(grid.cellsByColumn)
 }
 
 const moveDown = () => {
-  console.log("grid.cellsByColumn:", grid.cellsByColumn)
+  // console.log("grid.cellsByColumn:", grid.cellsByColumn)
   return slideTiles(
     grid.cellsByColumn.map((column) => [...column].reverse())
   )
 }
 const moveLeft = () => {
-  console.log("grid.cellsByRow:", grid.cellsByRow)
+  // console.log("grid.cellsByRow:", grid.cellsByRow)
   return slideTiles(grid.cellsByRow)
 }
 const moveRight = () => {
-  console.log("grid.cellsByRow:", grid.cellsByRow)
+  // console.log("grid.cellsByRow:", grid.cellsByRow)
   return slideTiles(grid.cellsByRow.map((row) => [...row].reverse()))
 }
 
