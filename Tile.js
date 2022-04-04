@@ -12,6 +12,10 @@ export default class Tile {
     this.value = Math.random() > 0.5 ? 2 : 4
   }
 
+  get value() {
+    return this.#value
+  }
+
   set value(v) {
     this.#value = v
     this.#tileElement.textContent = v
@@ -37,5 +41,10 @@ export default class Tile {
   set y(value) {
     this.#y = value
     this.#tileElement.style.setProperty("--y", value)
+  }
+
+  // remove tile from DOM
+  remove() {
+    this.#tileElement.remove()
   }
 }

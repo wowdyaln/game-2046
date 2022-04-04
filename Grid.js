@@ -33,6 +33,10 @@ export default class Grid {
     return this.#cells.filter((cell) => cell.tile == null)
   }
 
+  get cells() {
+    return this.#cells
+  }
+
   // 從目前所有空的 cells, 隨機取一個 cell 出來
   randomEmptyCell() {
     const randomIndex = Math.floor(
@@ -86,7 +90,7 @@ class Cell {
   #x
   #y
   #tile
-  #mergeTile
+  #mergeTile //? 目的在於？
 
   constructor(cellEle, x, y) {
     this.#cellEle = cellEle
@@ -128,6 +132,13 @@ class Cell {
 
     this.#mergeTile.x = this.#x
     this.#mergeTile.y = this.#y
+  }
+
+  mergeTiles() {
+    if (this.tile == null || this.mergeTile == null) return
+    this.tile.value = this.tile.value + this.mergeTile.value
+    this.mergeTile.remove() // remove tile from DOM
+    this.mergeTile = null
   }
 }
 
