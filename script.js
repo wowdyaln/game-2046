@@ -17,15 +17,31 @@ const handleInput = async (e) => {
   //? console.log(e.key)
   switch (e.key) {
     case "ArrowUp":
+      if (!canMoveUp()) {
+        setupInput()
+        return
+      }
       await moveUp()
       break
     case "ArrowDown":
+      if (!canMoveDown()) {
+        setupInput()
+        return
+      }
       await moveDown()
       break
     case "ArrowLeft":
+      if (!canMoveLeft()) {
+        setupInput()
+        return
+      }
       await moveLeft()
       break
     case "ArrowRight":
+      if (!canMoveRight()) {
+        setupInput()
+        return
+      }
       await moveRight()
       break
     default: //* 如果不是方向鍵，再 call setupInput.
@@ -43,10 +59,8 @@ const handleInput = async (e) => {
 
 const moveUp = () => {
   // console.log("grid.cellsByColumn:", grid.cellsByColumn)
-
   return slideTiles(grid.cellsByColumn)
 }
-
 const moveDown = () => {
   // console.log("grid.cellsByColumn:", grid.cellsByColumn)
   return slideTiles(
@@ -60,6 +74,35 @@ const moveLeft = () => {
 const moveRight = () => {
   // console.log("grid.cellsByRow:", grid.cellsByRow)
   return slideTiles(grid.cellsByRow.map((row) => [...row].reverse()))
+}
+
+//* 當所有 tiles 不能移動且不能合併時候，不產生新的 tile
+const canMove = (cells) => {
+  return cells.some((group) => {
+    return group.some((cell, index) => {
+      if (index === 0) return false
+      if (cell.tile == null) return false
+      const moveToCell = group[index - 1]
+      return moveToCell.canAccept(cell.tile)
+    })
+  })
+}
+
+const canMoveUp = () => {
+  return canMove(grid.cellsByColumn)
+}
+const canMoveDown = () => {
+  return canMove(
+    grid.cellsByColumn.map((column) => [...column].reverse())
+  )
+}
+const canMoveLeft = () => {
+  return canMove(grid.cellsByRow)
+}
+const canMoveRight = () => {
+  return canMove(
+    grid.cellsByRow.map((column) => [...column].reverse())
+  )
 }
 
 const slideTiles = (cells) => {
