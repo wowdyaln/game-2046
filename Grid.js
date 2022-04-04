@@ -41,7 +41,7 @@ export default class Grid {
     return this.#emptyCells[randomIndex]
   }
 
-  //* 使用2階 Array呈現目前每個 cell 的狀態
+  //* 使用2階 Array呈現目前每個 cell 的狀態。 第1階：column 第2階：row
   get cellsByColumn() {
     return this.#cells.reduce((cellGrid, cell) => {
       // debugger //* 使用 debugger 一步步去思考

@@ -6,7 +6,7 @@ const gameBoard = document.getElementById("game-board")
 // new Grid(gameBoard)
 const grid = new Grid(gameBoard)
 
-console.log(grid.randomEmptyCell())
+//? console.log(grid.randomEmptyCell())
 
 const setupInput = () => {
   //the listener should be invoked at most once after being added. If true, the listener would be automatically removed when invoked.
@@ -14,7 +14,7 @@ const setupInput = () => {
 }
 
 const handleInput = (e) => {
-  console.log(e.key)
+  //? console.log(e.key)
   switch (e.key) {
     case "ArrowUp":
       moveUp()
@@ -35,7 +35,31 @@ const handleInput = (e) => {
 }
 
 const moveUp = () => {
-  console.log("move up")
+  return slideTiles(grid.cellsByColumn)
+}
+
+const slideTiles = (cells) => {
+  cells.forEach((group) => {
+    for (let i = 1; i < group.length; i++) {
+      const cell = group[i]
+      let lastValidCell
+
+      //give us the cell directly above that one.
+      for (let j = i - 1; j >= 0; j--) {
+        const moveToCell = group[j]
+        if (!moveToCell.canAccept(cell.tile)) break
+        lastValidCell = moveToCell
+      }
+      if (lastValidCell != null) {
+        if (lastValidCell.tile != null) {
+          lastValidCell.mergeTile = cell.tile
+        } else {
+          lastValidCell.tile = cell.tile
+        }
+        cell.tile = null
+      }
+    }
+  })
 }
 
 //* logic
