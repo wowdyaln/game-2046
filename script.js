@@ -32,10 +32,24 @@ const handleInput = (e) => {
       setupInput()
       return
   }
+  setupInput()
 }
 
 const moveUp = () => {
+  // console.log(`grid.cellsByColumn : ${grid.cellsByColumn}`)
   return slideTiles(grid.cellsByColumn)
+}
+
+const moveDown = () => {
+  return slideTiles(
+    grid.cellsByColumn.map((column) => [...column].reverse())
+  )
+}
+const moveLeft = () => {
+  return slideTiles(grid.cellsByRow)
+}
+const moveRight = () => {
+  return slideTiles(grid.cellsByRow.map((row) => [...row].reverse()))
 }
 
 const slideTiles = (cells) => {
@@ -64,8 +78,11 @@ const slideTiles = (cells) => {
 }
 
 //* logic
+
+// create two tiles
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 grid.randomEmptyCell().tile = new Tile(gameBoard)
 setupInput()
 
-console.log(grid.cellsByColumn)
+console.log("grid.cellsByColumn:", grid.cellsByColumn)
+console.log("grid.cellsByRow:", grid.cellsByRow)

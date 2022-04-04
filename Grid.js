@@ -60,6 +60,24 @@ export default class Grid {
     return cellGrid
     */
   }
+
+  //* 使用2階 Array呈現目前每個 cell 的狀態。 第1階：row 第2階：column
+  get cellsByRow() {
+    return this.#cells.reduce((cellGrid, cell) => {
+      cellGrid[cell.y] = cellGrid[cell.y] || []
+      cellGrid[cell.y][cell.x] = cell
+      return cellGrid
+    }, [])
+
+    /* 也可以改寫如下
+    const cellGrid = []
+    this.#cells.forEach((cell) => {
+      cellGrid[cell.y] = cellGrid[cell.y] || []
+      cellGrid[cell.y][cell.x] = cell
+    })
+    return cellGrid
+    */
+  }
 }
 
 //* 每個 cell 有自己的資料
